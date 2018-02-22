@@ -4,51 +4,49 @@
 
 # rtc2git
 
-A tool made for migrating code and code-history from an existing [RTC](https://jazz.net/products/rational-team-concert/) SCM repository into a Git repository
-It uses the CLI of RTC to gather the required informations.
+Una herramienta creada para migrar código e historial de códigos desde un repositorio SCM [RTC] (https://jazz.net/products/rational-team-concert/) existente en un repositorio Git.
+Utiliza la CLI de RTC para recopilar la información requerida.
 
 ## Prerequirements
 
-- RTC Server with Version 5.0+ (was tested using 5.0.1)
-- **[SCM Tools](https://jazz.net/downloads/rational-team-concert/releases/5.0.1?p=allDownloads)** from IBM.  
-   To avoid an account creation on the jazz.net site, you could use [bugmenot](http://bugmenot.com/).  
-   Please make sure that your SCM Tools run in **English** (because we need to parse their output sometimes).  
-   There is a wiki page on how to [configure RTC CLI](https://github.com/rtcTo/rtc2git/wiki/configure-RTC-CLI))
-- Python 3.4+ (does not work with previous versions or with Python 2)
+- RTC Server versión 5.0+ 
+- **[SCM Tools](https://jazz.net/downloads/rational-team-concert/releases/5.0.1?p=allDownloads)
+- Python 3.4+ (no funciona con versiones previas de o con Python 2)
 
 ## Development-Status
-For migrating bigger repositoriys (> 10000 changes) I advice to use our other tool [rtc2gitcli](https://github.com/rtcTo/rtc2gitcli) as the IBM Java API is more stable than IBM CLI API. 
-However this project is easier to run and adapt to different environments.
 
-This project is no longer in active development, because the author has no access to any RTC Server anymore (since they are migrated to git) and changes to code can only be hardly tested.
+Este repositorio es un fork de un proyecto que ya no se encuentra en desarrollo activo.
 
-## Usage
+Este proyecto ya no está en desarrollo activo, porque el autor ya no tiene acceso a ningún servidor RTC (ya que se migraron a git) y los cambios en el código solo se pueden probar.
 
-- Create a config file called `config.ini` and fill out the needed information, use the supplied `config.ini.sample` or `config.ini.minimum.sample` as reference
-- Execute `migration.py`
+## Uso
+
+- Crea un archivo de configuración llamado `config.ini` y completa la información necesaria, utiliza` config.ini.sample` o `config.ini.minimum.sample` provistos como referencia
+- Ejecute `migration.py`
 
 
 ### Pitfalls
-- Your stream or workspace is not allowed to have spaces in their name - In case your name contains spaces, please clone and rename them and use the cloned workspace/stream for migration (see [#104](https://github.com/rtcTo/rtc2git/issues/104), [#51](https://github.com/rtcTo/rtc2git/issues/51)).
-- Sometimes rtc2git can not determine any baseline and wont find any changes (accepting changesets 0) - Please referr to UseProvidedHistory config entry explained [here](https://github.com/rtcTo/rtc2git/wiki/Getting-your-History-Files)
-- The provided result of the compare command of IBM RTC CLI API does sometimes not provide the changesets in the fully correct order. This can result in merge conflicts, which should be solved by loading the workspace into eclipse, manually resolve them and resuming the migration by running the rtc2git again.
 
-## How does it work?
+- No se permite que su flujo de trabajo o espacio de trabajo tenga espacios en su nombre. En caso de que su nombre contenga espacios, clone y cámbieles el nombre y utilice el espacio de trabajo / flujo clonado para la migración (consulte [# 104] (https://github.com / rtcTo / rtc2git / issues / 104), [# 51] (https://github.com/rtcTo/rtc2git/issues/51)).
 
-1. It initalizes an empty git repository and clones it
-2. In this repository, it loads a newly created (which will be set to the oldest baseline possible) or existing rtc workspace
-3. The baseline of each component of a given stream is determined
-4. For each baseline a compare command will be executed
-5. The result of the compare will be parsed to get to the necessary commit-information (such as author, comment, date)
-6. The change will be accepted in the workspace
-7. The corresponding git command will be executed to do the same change in the git-repository
+- A veces rtc2git no puede determinar ninguna línea de base y no encontrará ningún cambio (aceptando conjuntos de cambios 0) - Consulte la entrada de configuración de UseProvidedHistory explicada [aquí] (https://github.com/rtcTo/rtc2git/wiki/Getting-your-History- Archivos)
 
+- El resultado proporcionado del comando de comparación de la API CLI de IBM RTC a veces no proporciona los conjuntos de cambios en el orden completamente correcto. Esto puede provocar conflictos de combinación, que deben resolverse cargando el espacio de trabajo en eclipse, resuélvalos manualmente y reanudando la migración ejecutando el rtc2git nuevamente.
 
-## Contribute
+## ¿Como funciona?
 
-We welcome any feedback! :)
+1. Inicializa un repositorio de git vacío y lo clona
+2. En este repositorio, carga una nueva creación (que se establecerá en la línea base más antigua posible) o espacio de trabajo rtc existente
+3. La línea de base de cada componente de un flujo determinado se determina
+4. Para cada línea base, se ejecutará un comando de comparación
+5. El resultado de la comparación se analizará para obtener la información de confirmación necesaria (como autor, comentario, fecha)
+6. El cambio será aceptado en el área de trabajo
+7. El comando git correspondiente se ejecutará para hacer el mismo cambio en el repositorio git
 
-Feel free to report and/or fix [issues](https://github.com/rtcTo/rtc2git/issues) or create new pull requests
+## Contribuye
+
+Bienvenido todo tipo de Feedback! :)
+
 
 ### Pull-Requests
 
@@ -58,7 +56,3 @@ Feel free to report and/or fix [issues](https://github.com/rtcTo/rtc2git/issues)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-## Wiki
-
-For more details [visit our wiki](https://github.com/rtcTo/rtc2git/wiki)
-You could also join us in [slack](https://rtc.to/#slack).
